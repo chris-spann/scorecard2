@@ -1,3 +1,5 @@
+[![Build and test](https://github.com/chris-spann/scorecard2/actions/workflows/test.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/test.yaml)
+[![pre-commit](https://github.com/chris-spann/scorecard2/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/pre-commit.yaml)
 # Scorecard 2
 
 ## Features

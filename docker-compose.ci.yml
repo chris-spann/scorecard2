@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  backend:
+    image: "scorecard2-backend:latest"
+
+  frontend:
+    image: "scorecard2-frontend:latest"

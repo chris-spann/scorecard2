@@ -43,9 +43,7 @@ def setup_routers(app: FastAPI, fastapi_users: FastAPIUsers) -> None:
         tags=["auth"],
     )
     app.include_router(
-        fastapi_users.get_users_router(
-            UserRead, UserUpdate, requires_verification=False
-        ),
+        fastapi_users.get_users_router(UserRead, UserUpdate, requires_verification=False),
         prefix=f"{settings.API_PATH}/users",
         tags=["users"],
     )

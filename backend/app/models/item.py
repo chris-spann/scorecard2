@@ -21,11 +21,7 @@ class Item(Base):
     user_id: Mapped[UUID] = mapped_column(GUID, ForeignKey("users.id"))
     user: Mapped["User"] = relationship(back_populates="items")
 
-    created: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    created: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     value: Mapped[str | None]

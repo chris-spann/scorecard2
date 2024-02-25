@@ -26,9 +26,7 @@ class TestGetSingleItem:
         user: User = await create_user()
         item: Item = await create_item(user=user)
         jwt_header = get_jwt_header(user)
-        resp = await client.get(
-            settings.API_PATH + f"/items/{item.id}", headers=jwt_header
-        )
+        resp = await client.get(settings.API_PATH + f"/items/{item.id}", headers=jwt_header)
         assert resp.status_code == 200, resp.text
         data = resp.json()
         assert data["id"] == item.id
@@ -40,9 +38,7 @@ class TestCreateItem:
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
 
-        resp = await client.post(
-            settings.API_PATH + "/items", headers=jwt_header, json={"value": "value"}
-        )
+        resp = await client.post(settings.API_PATH + "/items", headers=jwt_header, json={"value": "value"})
         assert resp.status_code == 201, resp.text
         assert resp.json()["id"]
 
@@ -53,18 +49,14 @@ class TestDeleteItem:
         item: Item = await create_item(user=user)
         jwt_header = get_jwt_header(user)
 
-        resp = await client.delete(
-            settings.API_PATH + f"/items/{item.id}", headers=jwt_header
-        )
+        resp = await client.delete(settings.API_PATH + f"/items/{item.id}", headers=jwt_header)
         assert resp.status_code == 200
 
     async def test_delete_item_does_not_exist(self, client: AsyncClient, create_user):
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
 
-        resp = await client.delete(
-            settings.API_PATH + f"/items/{10**6}", headers=jwt_header
-        )
+        resp = await client.delete(settings.API_PATH + f"/items/{10**6}", headers=jwt_header)
         assert resp.status_code == 404, resp.text
 
 

@@ -48,6 +48,4 @@ def get_user_manager(user_db=Depends(get_user_db)):
 fastapi_users = FastAPIUsers(get_user_manager, [jwt_authentication])
 
 CurrentUser = Annotated[UserModel, Depends(fastapi_users.current_user(active=True))]
-CurrentSuperuser = Annotated[
-    UserModel, Depends(fastapi_users.current_user(active=True, superuser=True))
-]
+CurrentSuperuser = Annotated[UserModel, Depends(fastapi_users.current_user(active=True, superuser=True))]

@@ -1,5 +1,6 @@
 import json
-from typing import Annotated, Callable, Optional, Type
+from collections.abc import Callable
+from typing import Annotated
 
 from fastapi import Depends, HTTPException, Query
 from sqlalchemy import UnaryExpression, asc, desc
@@ -9,17 +10,17 @@ from app.models.item import Item
 from app.schemas.request_params import RequestParams
 
 
-def parse_react_admin_params(model: Type[Base]) -> Callable:
+def parse_react_admin_params(model: type[Base]) -> Callable:
     """Parses sort and range parameters coming from a react-admin request"""
 
     def inner(
-        sort_: Optional[str] = Query(
+        sort_: str | None = Query(
             None,
             alias="sort",
             description='Format: `["field_name", "direction"]`',
             example='["id", "ASC"]',
         ),
-        range_: Optional[str] = Query(
+        range_: str | None = Query(
             None,
             alias="range",
             description="Format: `[start, end]`",

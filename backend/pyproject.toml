@@ -25,6 +25,16 @@ pytest-cov = "^4.1.0"
 httpx = "^0.24.1"
 pytest-asyncio = "^0.21.1"
 
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+exclude = ["alembic/**/*", "alembic/*"]
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "B", "SIM", "I"]
+ignore = ["B008", "F401"]
+exclude = ["alembic/**/*", "alembic/*"]
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

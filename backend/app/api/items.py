@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any
 
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import func, select
@@ -14,16 +14,14 @@ from app.schemas.item import ItemCreate, ItemUpdate
 router = APIRouter(prefix="/items")
 
 
-@router.get("", response_model=List[ItemSchema])
+@router.get("", response_model=list[ItemSchema])
 async def get_items(
     response: Response,
     session: CurrentAsyncSession,
     request_params: ItemRequestParams,
     user: CurrentUser,
 ) -> Any:
-    total = await session.scalar(
-        select(func.count(Item.id).filter(Item.user_id == user.id))
-    )
+    total = await session.scalar(select(func.count(Item.id).filter(Item.user_id == user.id)))
     items = (
         (
             await session.execute(
@@ -37,9 +35,7 @@ async def get_items(
         .scalars()
         .all()
     )
-    response.headers[
-        "Content-Range"
-    ] = f"{request_params.skip}-{request_params.skip + len(items)}/{total}"
+    response.headers["Content-Range"] = f"{request_params.skip}-{request_params.skip + len(items)}/{total}"
     return items
 
 
@@ -63,7 +59,7 @@ async def update_item(
     session: CurrentAsyncSession,
     user: CurrentUser,
 ) -> Any:
-    item: Optional[Item] = await session.get(Item, item_id)
+    item: Item | None = await session.get(Item, item_id)
     if not item or item.user_id != user.id:
         raise HTTPException(404)
     update_data = item_in.dict(exclude_unset=True)
@@ -80,7 +76,7 @@ async def get_item(
     session: CurrentAsyncSession,
     user: CurrentUser,
 ) -> Any:
-    item: Optional[Item] = await session.get(Item, item_id)
+    item: Item | None = await session.get(Item, item_id)
     if not item or item.user_id != user.id:
         raise HTTPException(404)
     return item
@@ -92,7 +88,7 @@ async def delete_item(
     session: CurrentAsyncSession,
     user: CurrentUser,
 ) -> Any:
-    item: Optional[Item] = await session.get(Item, item_id)
+    item: Item | None = await session.get(Item, item_id)
     if not item or item.user_id != user.id:
         raise HTTPException(404)
     await session.delete(item)

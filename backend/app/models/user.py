@@ -15,12 +15,8 @@ if TYPE_CHECKING:
 class User(SQLAlchemyBaseUserTableUUID, Base):
     __tablename__ = "users"
 
-    created: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
+    created: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     items: Mapped["Item"] = relationship(back_populates="user", cascade="all, delete")
 
     def __repr__(self):

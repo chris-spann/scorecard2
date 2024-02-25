@@ -1,6 +1,7 @@
 import asyncio
 import uuid
 from collections.abc import Callable
+from typing import cast
 
 import pytest
 from httpx import AsyncClient
@@ -16,7 +17,7 @@ from app.models.user import User
 from tests.utils import generate_random_string
 
 engine = create_async_engine(
-    settings.ASYNC_DATABASE_URL,
+    str(cast(str, settings.ASYNC_DATABASE_URL)),
 )
 async_session_maker = async_sessionmaker(
     engine,

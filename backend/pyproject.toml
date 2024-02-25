@@ -24,6 +24,7 @@ ipython = "^8.22.1"
 pytest-cov = "^4.1.0"
 httpx = "^0.24.1"
 pytest-asyncio = "^0.21.1"
+ruff = "^0.2.2"
 
 [tool.ruff]
 line-length = 120
@@ -32,7 +33,7 @@ exclude = ["alembic/**/*", "alembic/*"]
 
 [tool.ruff.lint]
 select = ["E", "F", "UP", "B", "SIM", "I"]
-ignore = ["B008", "F401"]
+ignore = ["B008", "F401", "UP007"]
 exclude = ["alembic/**/*", "alembic/*"]
 
 [build-system]

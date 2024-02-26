@@ -7,7 +7,7 @@
 - FastAPI
 - React Admin
 - SQLAlchemy and Alembic
-- Pre-commit hooks (black, autoflake, isort, flake8, prettier)
+- Pre-commit hooks (ruff, prettier)
 - Github Action
 - Dependabot config
 - Docker images

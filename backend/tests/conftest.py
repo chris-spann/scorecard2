@@ -37,9 +37,11 @@ async def init_db():
 @pytest.fixture(scope="session")
 async def db():
     async with async_session_maker() as session, session.begin_nested():
-        yield session
-        await session.rollback()
-        await session.close()
+        try:
+            yield session
+        # await session.rollback()
+        finally:
+            await session.close()
 
 
 @pytest.fixture(scope="session")

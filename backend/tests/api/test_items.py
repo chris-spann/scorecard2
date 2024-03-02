@@ -7,12 +7,13 @@ from app.models.user import User
 from tests.utils import get_jwt_header
 
 
-@pytest.mark.asyncio
 class TestGetItems:
+    @pytest.mark.asyncio
     async def test_get_items_not_logged_in(self, client: AsyncClient):
         resp = await client.get(settings.API_PATH + "/items")
         assert resp.status_code == 401
 
+    @pytest.mark.asyncio
     async def test_get_items(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         await create_item(user=user)
@@ -24,6 +25,7 @@ class TestGetItems:
 
 
 class TestGetSingleItem:
+    @pytest.mark.asyncio
     async def test_get_single_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)
@@ -36,6 +38,7 @@ class TestGetSingleItem:
 
 
 class TestCreateItem:
+    @pytest.mark.asyncio
     async def test_create_item(self, client: AsyncClient, create_user):
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
@@ -46,6 +49,7 @@ class TestCreateItem:
 
 
 class TestDeleteItem:
+    @pytest.mark.asyncio
     async def test_delete_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)
@@ -54,6 +58,7 @@ class TestDeleteItem:
         resp = await client.delete(settings.API_PATH + f"/items/{item.id}", headers=jwt_header)
         assert resp.status_code == 200
 
+    @pytest.mark.asyncio
     async def test_delete_item_does_not_exist(self, client: AsyncClient, create_user):
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
@@ -63,6 +68,7 @@ class TestDeleteItem:
 
 
 class TestUpdateItem:
+    @pytest.mark.asyncio
     async def test_update_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)

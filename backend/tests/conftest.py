@@ -36,7 +36,7 @@ async def init_db():
 
 @pytest.fixture(scope="function")
 async def db():
-    async with async_session_maker() as session, session.begin_nested():
+    async with async_session_maker() as session:
         try:
             yield session
         # await session.rollback()
@@ -67,16 +67,16 @@ async def auto_rollback(db: AsyncSession):
 
 @pytest.fixture(scope="function")
 def create_user(db: AsyncSession, default_password: str):
-    user_manager = next(get_user_manager())
-
     async def inner():
-        user = User(
-            id=uuid.uuid4(),
-            email=f"{generate_random_string(20)}@{generate_random_string(10)}.com",
-            hashed_password=user_manager.password_helper.hash(default_password),
-        )
-        db.add(user)
-        await db.commit()
+        async with db.begin_nested():
+            user_manager = next(get_user_manager())
+            user = User(
+                id=uuid.uuid4(),
+                email=f"{generate_random_string(20)}@{generate_random_string(10)}.com",
+                hashed_password=user_manager.password_helper.hash(default_password),
+            )
+            db.add(user)
+            await db.commit()
         return user
 
     return inner
@@ -85,14 +85,15 @@ def create_user(db: AsyncSession, default_password: str):
 @pytest.fixture(scope="function")
 def create_item(db: AsyncSession, create_user: Callable):
     async def inner(user=None):
-        if not user:
-            user = await create_user()
-        item = Item(
-            user=user,
-            value="value",
-        )
-        db.add(item)
-        await db.commit()
+        async with db.begin_nested():
+            if not user:
+                user = await create_user()
+            item = Item(
+                user=user,
+                value="value",
+            )
+            db.add(item)
+            await db.commit()
         return item
 
     return inner

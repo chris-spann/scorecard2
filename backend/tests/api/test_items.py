@@ -9,11 +9,11 @@ from tests.utils import get_jwt_header
 
 @pytest.mark.asyncio
 class TestGetItems:
-    async def test_get_items_not_logged_in(self, event_loop, client: AsyncClient):
+    async def test_get_items_not_logged_in(self, client: AsyncClient):
         resp = await client.get(settings.API_PATH + "/items")
         assert resp.status_code == 401
 
-    async def test_get_items(self, event_loop, client: AsyncClient, create_user, create_item):
+    async def test_get_items(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         await create_item(user=user)
         jwt_header = get_jwt_header(user)
@@ -24,7 +24,7 @@ class TestGetItems:
 
 
 class TestGetSingleItem:
-    async def test_get_single_item(self, event_loop, client: AsyncClient, create_user, create_item):
+    async def test_get_single_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)
         jwt_header = get_jwt_header(user)
@@ -36,7 +36,7 @@ class TestGetSingleItem:
 
 
 class TestCreateItem:
-    async def test_create_item(self, event_loop, client: AsyncClient, create_user):
+    async def test_create_item(self, client: AsyncClient, create_user):
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
 
@@ -46,7 +46,7 @@ class TestCreateItem:
 
 
 class TestDeleteItem:
-    async def test_delete_item(self, event_loop, client: AsyncClient, create_user, create_item):
+    async def test_delete_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)
         jwt_header = get_jwt_header(user)
@@ -54,7 +54,7 @@ class TestDeleteItem:
         resp = await client.delete(settings.API_PATH + f"/items/{item.id}", headers=jwt_header)
         assert resp.status_code == 200
 
-    async def test_delete_item_does_not_exist(self, event_loop, client: AsyncClient, create_user):
+    async def test_delete_item_does_not_exist(self, client: AsyncClient, create_user):
         user: User = await create_user()
         jwt_header = get_jwt_header(user)
 
@@ -63,7 +63,7 @@ class TestDeleteItem:
 
 
 class TestUpdateItem:
-    async def test_update_item(self, event_loop, client: AsyncClient, create_user, create_item):
+    async def test_update_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
         item: Item = await create_item(user=user)
         jwt_header = get_jwt_header(user)

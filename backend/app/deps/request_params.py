@@ -18,7 +18,7 @@ def parse_react_admin_params(model: type[Base]) -> Callable:
             None,
             alias="sort",
             description='Format: `["field_name", "direction"]`',
-            example='["id", "ASC"]',
+            examples=["id", "ASC"],
         ),
         range_: str | None = Query(
             None,

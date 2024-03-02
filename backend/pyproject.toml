@@ -45,3 +45,6 @@ skip = [".env"]
 
 [tool.pytest.ini_options]
 asyncio_mode = 'auto'
+
+[tool.coverage.run]
+omit = ["tests/*", "alembic/*", "*/__init__.py"]

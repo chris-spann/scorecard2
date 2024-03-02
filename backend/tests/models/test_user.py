@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.user import User
 
 
-@pytest.mark.asyncio(scope="module")
+@pytest.mark.asyncio
 async def test_user_model(db: AsyncSession):
     user = User(id=uuid4(), email="test@example.com", hashed_password="1234")
     db.add(user)

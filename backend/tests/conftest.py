@@ -36,7 +36,7 @@ async def init_db():
 
 @pytest.fixture(scope="session")
 async def db():
-    async with async_session_maker() as session:
+    async with async_session_maker() as session, session.begin_nested():
         yield session
         await session.rollback()
         await session.close()
@@ -52,7 +52,7 @@ def app():
     return create_app()
 
 
-@pytest.fixture()
+@pytest.fixture
 async def client(app):
     async with AsyncClient(app=app, base_url="http://test") as ac:
         yield ac
@@ -74,7 +74,7 @@ def create_user(db: AsyncSession, default_password: str):
             hashed_password=user_manager.password_helper.hash(default_password),
         )
         db.add(user)
-        await db.commit()
+        # await db.commit()
         return user
 
     return inner
@@ -90,7 +90,7 @@ def create_item(db: AsyncSession, create_user: Callable):
             value="value",
         )
         db.add(item)
-        await db.commit()
+        # await db.commit()
         return item
 
     return inner

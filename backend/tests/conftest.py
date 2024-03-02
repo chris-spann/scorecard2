@@ -52,7 +52,7 @@ def app():
     return create_app()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 async def client(app):
     async with AsyncClient(app=app, base_url="http://test") as ac:
         yield ac
@@ -98,6 +98,6 @@ def create_item(db: AsyncSession, create_user: Callable):
 
 @pytest.fixture(scope="session")
 def event_loop():
-    loop = asyncio.new_event_loop()
+    loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()

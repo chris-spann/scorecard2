@@ -1,3 +1,4 @@
+import pytest
 from httpx import AsyncClient
 
 from app.core.config import settings
@@ -6,6 +7,7 @@ from app.models.user import User
 from tests.utils import get_jwt_header
 
 
+@pytest.mark.asyncio
 class TestGetItems:
     async def test_get_items_not_logged_in(self, client: AsyncClient):
         resp = await client.get(settings.API_PATH + "/items")
@@ -21,6 +23,7 @@ class TestGetItems:
         assert len(resp.json()) == 1
 
 
+@pytest.mark.asyncio
 class TestGetSingleItem:
     async def test_get_single_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
@@ -33,6 +36,7 @@ class TestGetSingleItem:
         assert data["value"] == item.value
 
 
+@pytest.mark.asyncio
 class TestCreateItem:
     async def test_create_item(self, client: AsyncClient, create_user):
         user: User = await create_user()
@@ -43,6 +47,7 @@ class TestCreateItem:
         assert resp.json()["id"]
 
 
+@pytest.mark.asyncio
 class TestDeleteItem:
     async def test_delete_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()
@@ -60,6 +65,7 @@ class TestDeleteItem:
         assert resp.status_code == 404, resp.text
 
 
+@pytest.mark.asyncio
 class TestUpdateItem:
     async def test_update_item(self, client: AsyncClient, create_user, create_item):
         user: User = await create_user()

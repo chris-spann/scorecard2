@@ -65,7 +65,7 @@ async def auto_rollback(db: AsyncSession):
     await db.rollback()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def create_user(db: AsyncSession, default_password: str):
     user_manager = next(get_user_manager())
 
@@ -76,13 +76,13 @@ def create_user(db: AsyncSession, default_password: str):
             hashed_password=user_manager.password_helper.hash(default_password),
         )
         db.add(user)
-        # await db.commit()
+        await db.commit()
         return user
 
     return inner
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def create_item(db: AsyncSession, create_user: Callable):
     async def inner(user=None):
         if not user:
@@ -92,7 +92,7 @@ def create_item(db: AsyncSession, create_user: Callable):
             value="value",
         )
         db.add(item)
-        # await db.commit()
+        await db.commit()
         return item
 
     return inner

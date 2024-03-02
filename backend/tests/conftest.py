@@ -34,7 +34,7 @@ async def init_db():
         await conn.run_sync(Base.metadata.create_all)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 async def db():
     async with async_session_maker() as session, session.begin_nested():
         try:

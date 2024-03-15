@@ -3,7 +3,6 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.orm.session import sessionmaker
 
 from app.core.config import settings
-from app.models.user import User
 
 if __name__ == "__main__":
     engine = create_engine(settings.DATABASE_URL, future=True)

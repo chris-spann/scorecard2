@@ -27,11 +27,8 @@ describe("Test register, login and item", () => {
 
   it("Logs in", () => {
     // if Welcome to admin already displayed anywhere, then no need to login
-    cy.get("body").then(($body) => {
-      if ($body.text().includes("Welcome to admin")) {
-        return;
-      }
-    });
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.get("input").first().type(username);
     cy.get("input").last().type(defaultPassword);
     cy.get("button").first().click();

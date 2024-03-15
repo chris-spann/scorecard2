@@ -83,11 +83,7 @@ async def get_item(
 
 
 @router.delete("/{item_id}")
-async def delete_item(
-    item_id: int,
-    session: CurrentAsyncSession,
-    user: CurrentUser,
-) -> Any:
+async def delete_item(item_id: int, session: CurrentAsyncSession, user: CurrentUser) -> Any:
     item: Item | None = await session.get(Item, item_id)
     if not item or item.user_id != user.id:
         raise HTTPException(404)

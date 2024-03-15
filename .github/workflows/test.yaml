@@ -87,6 +87,13 @@ jobs:
         record: false
         working-directory: frontend
 
+    - name: Upload test results
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: cypress-screenshots
+        path: frontend/cypress/screenshots
+
     - name: Log docker status
       if: ${{ always() }}
       run: |

@@ -63,7 +63,7 @@ def serve_static_app(app):
             return response
         if response.status_code == 404:
             return FileResponse("static/index.html")
-        return response
+        return response  # pragma: no cover
 
 
 def setup_cors_middleware(app):

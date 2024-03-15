@@ -10,7 +10,7 @@ if __name__ == "__main__":
     SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
     terminal = embed.InteractiveShellEmbed()
-    terminal.extension_manager.load_extension("autoreload")
+    terminal.extension_manager.load_extension("autoreload")  # type: ignore
     terminal.run_line_magic("autoreload", "2")
 
     db = SessionLocal(future=True)

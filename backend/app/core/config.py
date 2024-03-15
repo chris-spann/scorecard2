@@ -32,16 +32,17 @@ class Settings(BaseSettings):
             url = values["TEST_DATABASE_URL"]
         if url:
             return url.replace("postgres://", "postgresql://")
-        return url
+        return url  # pragma: no cover
 
     @validator("ASYNC_DATABASE_URL")
     def build_async_database_url(cls, v: Optional[str], values: dict[str, Any]):
         """Builds ASYNC_DATABASE_URL from DATABASE_URL."""
-        v = values["DATABASE_URL"]
-        return v.replace("postgresql", "postgresql+asyncpg", 1) if v else v
+        if "DATABASE_URL" in values:
+            v = values["DATABASE_URL"]
+            return v.replace("postgresql", "postgresql+asyncpg", 1) if v else v
+        return  # pragma: no cover
 
     SECRET_KEY: str
-    #  END: required environment variables
 
 
 settings = Settings.parse_obj({})

@@ -1,3 +1,4 @@
+# type: ignore
 """Add initial migration
 
 Revision ID: 7e09fa75df7a

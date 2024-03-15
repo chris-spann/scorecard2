@@ -13,7 +13,7 @@ jobs:
         python-version: 3.11
     - uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '21.x'
         cache-dependency-path: "frontend/yarn.lock"
         cache: 'yarn'
     - run: cd frontend && yarn install

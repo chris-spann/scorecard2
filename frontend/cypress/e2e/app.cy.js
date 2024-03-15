@@ -28,7 +28,7 @@ describe("Test register, login and item", () => {
   it("Logs in", () => {
     cy.get("input").first().type(username);
     cy.get("input").last().type(defaultPassword);
-    cy.get("button").first().click();
+    cy.get("button", { timeout: 10000 }).should("be.visible").first().click();
     cy.get("button").first().click();
     cy.get("button").should(
       () => {

@@ -1,9 +1,9 @@
-name: Build and test
+name: build and test
 
 on: [workflow_dispatch, push]
 
 jobs:
-  test:
+  build_backend:
     runs-on: ubuntu-latest
     env:
        DOCKER_BUILDKIT: 1
@@ -27,43 +27,61 @@ jobs:
         context: backend
         load: true
 
-    - name: Build frontend
-      id: docker_build_frontend
-      uses: docker/build-push-action@v5
-      with:
-        push: false
-        tags: "scorecard2-frontend:latest"
-        cache-from: type=gha,scope=ci-test
-        cache-to: type=gha,mode=max,scope=ci-test
-        context: frontend
-        load: true
+  build_frontend:
+    runs-on: ubuntu-latest
+    env:
+       DOCKER_BUILDKIT: 1
+       COMPOSE_DOCKER_CLI_BUILD: 1
 
-    - name: Start containers and run tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build frontend
+        id: docker_build_frontend
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          tags: "scorecard2-frontend:latest"
+          cache-from: type=gha,scope=ci-test
+          cache-to: type=gha,mode=max,scope=ci-test
+          context: frontend
+          load: true
+
+  test:
+    needs: [build_backend, build_frontend]
+    runs-on: ubuntu-latest
+    env:
+        DOCKER_BUILDKIT: 1
+        COMPOSE_DOCKER_CLI_BUILD: 1
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Start containers
       run: |
         mv env-template .env
         docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
         docker-compose exec -T postgres createdb -U postgres apptest
 
-    - name: Check that models are in sync with alembic migrations
+    - name: Model-migration check
       run: |
         docker-compose exec -T backend alembic upgrade head
         docker-compose exec -T backend alembic check
 
-    - name: Run tests
+    - name: Run backend tests
       run: |
         docker-compose exec -T backend pytest -v -s --cov=app --cov-report term-missing
 
-    - name: Cypress run
-      uses: cypress-io/github-action@v6
-      env:
-        # Add Cypress key to Github project settings if you want to
-        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        # Set to true to record
-        record: false
-        working-directory: frontend
-
+    - name: Run frontend tests
+      working-directory: ./frontend
+      run: |
+        npm install -g yarn
+        yarn install --frozen-lockfile
+        yarn test --coverage
 
     - name: Log docker status
       if: ${{ always() }}

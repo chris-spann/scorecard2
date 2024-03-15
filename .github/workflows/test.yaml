@@ -51,7 +51,7 @@ jobs:
 
     - name: Run tests
       run: |
-        docker-compose exec -T backend pytest -v --cov --cov-report term-missing
+        docker-compose exec -T backend pytest -v -s --cov=app --cov-report term-missing
 
     - name: Cypress run
       uses: cypress-io/github-action@v6

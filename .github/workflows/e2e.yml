@@ -1,0 +1,18 @@
+name: End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Start containers
+        run: |
+          mv env-template .env
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+          docker-compose exec -T backend alembic upgrade head
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          record: false
+          working-directory: frontend

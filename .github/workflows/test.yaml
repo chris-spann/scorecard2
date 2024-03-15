@@ -1,4 +1,4 @@
-name: Build and test
+name: build and test
 
 on: [workflow_dispatch, push]
 
@@ -61,13 +61,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Start containers and run tests
+    - name: Start containers
       run: |
         mv env-template .env
         docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
         docker-compose exec -T postgres createdb -U postgres apptest
 
-    - name: Check that models are in sync with alembic migrations
+    - name: Model-migration check
       run: |
         docker-compose exec -T backend alembic upgrade head
         docker-compose exec -T backend alembic check

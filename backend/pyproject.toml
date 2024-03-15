@@ -47,4 +47,5 @@ skip = [".env"]
 asyncio_mode = 'auto'
 
 [tool.coverage.run]
-omit = ["tests/*", "alembic/*", "*/__init__.py"]
+omit = ["*/__init__.py"]
+concurrency = ["greenlet", "thread"]

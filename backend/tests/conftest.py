@@ -82,12 +82,12 @@ def create_user(db: AsyncSession, default_password: str):
 
 @pytest.fixture(scope="session")
 def create_item(db: AsyncSession, create_user: Callable):
-    async def inner(user=None):
+    async def inner(user=None, value="value"):
         if not user:
             user = await create_user()
         item = Item(
             user=user,
-            value="value",
+            value=value,
         )
         db.add(item)
         await db.commit()

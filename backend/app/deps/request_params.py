@@ -24,7 +24,7 @@ def parse_react_admin_params(model: type[Base]) -> Callable:
             None,
             alias="range",
             description="Format: `[start, end]`",
-            example="[0, 10]",
+            examples=[0, 10],
         ),
     ) -> RequestParams:
         skip, limit = 0, 10

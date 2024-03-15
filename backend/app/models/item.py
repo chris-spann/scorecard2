@@ -10,8 +10,8 @@ from sqlalchemy.sql.sqltypes import DateTime
 
 from app.db import Base
 
-if TYPE_CHECKING:
-    from app.models.user import User  # noqa: F401
+if TYPE_CHECKING:  # pragma: no cover
+    from app.models.user import User
 
 
 class Item(Base):

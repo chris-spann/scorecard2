@@ -1,3 +1,4 @@
+# type: ignore
 """Add item migration
 
 Revision ID: 5c89a726934c

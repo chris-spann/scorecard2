@@ -8,8 +8,8 @@ from sqlalchemy.sql.functions import func
 
 from app.db import Base
 
-if TYPE_CHECKING:
-    from app.models.item import Item  # noqa: F401
+if TYPE_CHECKING:  # pragma: no cover
+    from app.models.item import Item
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):

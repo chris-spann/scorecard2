@@ -81,6 +81,24 @@ def create_user(db: AsyncSession, default_password: str):
 
 
 @pytest.fixture(scope="session")
+def create_superuser(db: AsyncSession, default_password: str):
+    user_manager = next(get_user_manager())
+
+    async def inner():
+        user = User(
+            id=uuid.uuid4(),
+            email=f"{generate_random_string(20)}@{generate_random_string(10)}.com",
+            hashed_password=user_manager.password_helper.hash(default_password),
+            is_superuser=True,
+        )
+        db.add(user)
+        await db.commit()
+        return user
+
+    return inner
+
+
+@pytest.fixture(scope="session")
 def create_item(db: AsyncSession, create_user: Callable):
     async def inner(user=None, value="value"):
         if not user:

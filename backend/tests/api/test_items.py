@@ -1,13 +1,8 @@
-from unittest.mock import AsyncMock
-
-import pytest
 from httpx import AsyncClient
 
 from app.core.config import settings
-from app.deps.request_params import ItemRequestParams
 from app.models.item import Item
 from app.models.user import User
-from app.schemas.item import ItemCreate
 from tests.utils import get_jwt_header
 
 
@@ -94,3 +89,15 @@ class TestUpdateItem:
         )
         assert resp.status_code == 200, resp.text
         assert resp.json()["value"] == "new value"
+
+    async def test_update_item_does_not_exist(self, client: AsyncClient, create_user, create_item):
+        user: User = await create_user()
+        jwt_header = get_jwt_header(user)
+
+        resp = await client.put(
+            settings.API_PATH + f"/items/{10**6}",
+            headers=jwt_header,
+            json={"value": "new value"},
+        )
+
+        assert resp.status_code == 404, resp.text

@@ -90,7 +90,7 @@ jobs:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        record: true
+        record: false
         working-directory: frontend
 
     - name: Upload test results

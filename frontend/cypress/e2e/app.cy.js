@@ -28,7 +28,8 @@ describe("Test register, login and item", () => {
   it("Logs in", () => {
     // if Welcome to admin already displayed anywhere, then no need to login
     cy.get("body").then(($body) => {
-      if ($body.text().includes("Welcome to admin")) {
+      // if ($body.innertext().includes("Welcome to admin")) {
+      if (cy.contains($body, "Welcome to admin").length > 0) {
         return;
       }
     });

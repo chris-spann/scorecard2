@@ -25,11 +25,7 @@ describe("Test register, login and item", () => {
     cy.contains("Successfully registered");
   });
 
-  it("Logs in", { retries: 2 }, () => {
-    // if Welcome to admin already displayed anywhere, then no need to login
-    cy.clearLocalStorage();
-    cy.clearCookies();
-    cy.visit("http://localhost:3000/");
+  it("Logs in", () => {
     cy.get("input").first().type(username);
     cy.get("input").last().type(defaultPassword);
     cy.get("button").first().click();

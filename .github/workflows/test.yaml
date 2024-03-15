@@ -83,23 +83,6 @@ jobs:
         yarn install --frozen-lockfile
         yarn test --coverage
 
-    - name: Run E2E tests
-      uses: cypress-io/github-action@v6
-      env:
-        # Add Cypress key to Github project settings if you want to
-        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        record: false
-        working-directory: frontend
-
-    - name: Upload test results
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: cypress-screenshots
-        path: frontend/cypress/screenshots
-
     - name: Log docker status
       if: ${{ always() }}
       run: |

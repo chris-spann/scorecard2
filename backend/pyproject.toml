@@ -15,7 +15,7 @@ psycopg2-binary = "^2.9.9"
 asyncpg = "^0.29.0"
 SQLAlchemy = "^2.0.28"
 gunicorn = "^21.2.0"
-fastapi-users = {extras = ["sqlalchemy"], version = "^12.1.2"}
+fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.2.0"

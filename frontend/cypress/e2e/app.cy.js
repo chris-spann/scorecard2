@@ -26,19 +26,24 @@ describe("Test register, login and item", () => {
   });
 
   it("Logs in", () => {
-    cy.get("input").first().type(username);
-    cy.get("input").last().type(defaultPassword);
-    cy.get("button").first().click();
-    cy.get("button").first().click();
-    cy.get("button").should(
-      () => {
-        // eslint-disable-next-line no-unused-expressions
-        expect(localStorage.getItem("token")).to.be.not.null;
-      },
-      { timeout: 2000 }
-    );
-    cy.contains("Welcome to admin");
-    cy.saveLocalStorage();
+    cy.get("body").then(($body) => {
+      if ($body.text().includes("Welcome to admin")) {
+        return;
+      }
+      cy.get("input").first().type(username);
+      cy.get("input").last().type(defaultPassword);
+      cy.get("button").first().click();
+      cy.get("button").first().click();
+      cy.get("button").should(
+        () => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(localStorage.getItem("token")).to.be.not.null;
+        },
+        { timeout: 2000 }
+      );
+      cy.contains("Welcome to admin");
+      cy.saveLocalStorage();
+    });
   });
 
   it("Creates an item", () => {

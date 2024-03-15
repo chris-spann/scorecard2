@@ -249,4 +249,9 @@ dmypy.json
 # profiling data
 .prof
 
+# local vscode config
 .vscode/*
+
+# cypress output
+frontend/cypress/screenshots/
+frontend/cypress/videos/

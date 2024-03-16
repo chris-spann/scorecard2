@@ -1,9 +1,9 @@
-name: "FE: build and test"
+name: FE
 
 on: [workflow_dispatch, push]
 
 jobs:
-  build_frontend:
+  build:
     runs-on: ubuntu-latest
     env:
        DOCKER_BUILDKIT: 1
@@ -28,7 +28,7 @@ jobs:
           load: true
 
   test:
-    needs: [build_frontend]
+    needs: [build]
     runs-on: ubuntu-latest
     env:
         DOCKER_BUILDKIT: 1
@@ -43,9 +43,3 @@ jobs:
         npm install -g yarn
         yarn install --frozen-lockfile
         yarn test --coverage
-
-    - name: Log docker status
-      if: ${{ always() }}
-      run: |
-        docker-compose ps
-        docker-compose logs -t

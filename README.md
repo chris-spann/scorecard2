@@ -1,6 +1,7 @@
 [![pre-commit](https://github.com/chris-spann/scorecard2/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/pre-commit.yaml)
-[![build and test](https://github.com/chris-spann/scorecard2/actions/workflows/test.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/test.yaml)
-[![End-to-end tests](https://github.com/chris-spann/scorecard2/actions/workflows/e2e.yml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/e2e.yml)
+[![BE](https://github.com/chris-spann/scorecard2/actions/workflows/test_be.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/test_be.yaml)
+[![FE](https://github.com/chris-spann/scorecard2/actions/workflows/test_fe.yaml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/test_fe.yaml)
+[![E2E](https://github.com/chris-spann/scorecard2/actions/workflows/test_e2e.yml/badge.svg)](https://github.com/chris-spann/scorecard2/actions/workflows/test_e2e.yml)
 # Scorecard 2
 
 ## Features

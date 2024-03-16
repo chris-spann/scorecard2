@@ -2,6 +2,11 @@ name: pre-commit
 
 on:
   push:
+    paths:
+    - '.pre-commit-config.yaml'
+    - '**.py'
+    - '**.js'
+  pull_request:
 
 jobs:
   pre-commit:

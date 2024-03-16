@@ -1,4 +1,7 @@
 exclude: "(frontend/src/generated/|backend/alembic/versions/)"
+ci:
+  autofix_prs: true
+  skip: []
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
@@ -29,5 +32,6 @@ repos:
     rev: "v7.20.0"
     hooks:
       - id: eslint
+        additional_dependencies: ["eslint-config-react-app@7.0.1", "eslint-plugin-cypress@2.15.1"]
         files: frontend/
         types_or: [javascript, jsx, ts, tsx]

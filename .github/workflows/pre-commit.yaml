@@ -2,11 +2,14 @@ name: pre-commit
 
 on:
   push:
+    branches:
+      - main
     paths:
-    - '.pre-commit-config.yaml'
-    - '**.py'
-    - '**.js'
+      - '.pre-commit-config.yaml'
+      - '**.py'
+      - '**.js'
   pull_request:
+    types: [opened, synchronize]
 
 jobs:
   pre-commit:

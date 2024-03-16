@@ -6,7 +6,6 @@ from typing import cast
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from starlette.testclient import TestClient
 
 from app.core.config import settings
 from app.db import Base

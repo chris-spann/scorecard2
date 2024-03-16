@@ -1,5 +1,5 @@
-from app.core.logger import logger
 from app.factory import create_app
+from app.core.logger import logger
 
 app = create_app()
 

@@ -2,6 +2,12 @@ name: pre-commit
 
 on:
   push:
+    branches:
+      - main
+    paths:
+      - '.pre-commit-config.yaml'
+      - '**.py'
+      - '**.js'
 
 jobs:
   pre-commit:

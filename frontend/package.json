@@ -54,7 +54,7 @@
     "@openapitools/openapi-generator-cli": "^2.11.0",
     "@types/react-router": "^5.1.20",
     "cypress": "^13.7.0",
-    "cypress-localstorage-commands": "^2.2.4",
+    "cypress-localstorage-commands": "^2.2.5",
     "cypress-pipe": "^2.0.0",
     "eslint-plugin-cypress": "^2.15.1",
     "prettier": "^3.0.3"

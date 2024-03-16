@@ -1,3 +1,14 @@
+import "cypress-pipe";
+
+Cypress.Commands.add("safeClick", { prevSubject: "element" }, ($element) => {
+  const click = ($el) => $el.click();
+  return cy
+    .wrap($element)
+    .should("be.visible")
+    .pipe(click)
+    .should(($el) => expect(Cypress.dom.isDetached($el)).to.be.false);
+});
+
 const username = `abc${new Date().getTime()}@example.com`;
 const defaultPassword = "password";
 
@@ -21,15 +32,15 @@ describe("Test register, login and item", () => {
 
     cy.get("input").first().type(username);
     cy.get("input").last().type(defaultPassword);
-    cy.get("button").first().click();
+    cy.get("button").first().safeClick();
     cy.contains("Successfully registered");
   });
 
   it("Logs in", () => {
     cy.get("input").first().type(username);
     cy.get("input").last().type(defaultPassword);
-    cy.get("button", { timeout: 10000 }).should("be.visible").first().click();
-    cy.get("button").first().click();
+    cy.get("button", { timeout: 5000 }).first().safeClick();
+    cy.get("button").first().safeClick();
     cy.get("button").should(
       () => {
         // eslint-disable-next-line no-unused-expressions

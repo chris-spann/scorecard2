@@ -27,6 +27,9 @@ jobs:
         context: backend
         load: true
 
+    - name: Image size
+      run: docker images scorecard2-backend:latest --format "{{.Size}}"
+
   test:
     needs: [build]
     runs-on: ubuntu-latest

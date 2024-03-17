@@ -34,8 +34,8 @@ jobs:
       with:
         push: true
         tags: "cspanndev/scorecard2-backend:${{ steps.generate_tag.outputs.tag }}"
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: type=gha,scope=ci-test-be
+        cache-to: type=gha,mode=max,scope=ci-test-be
         context: backend
         load: true
 

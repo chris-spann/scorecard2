@@ -34,8 +34,8 @@ jobs:
       with:
         push: true
         tags: "scorecard2-frontend:${{ steps.generate_tag.outputs.tag }}"
-        cache-from: type=gha,scope=ci-test
-        cache-to: type=gha,mode=max,scope=ci-test
+        cache-from: type=gha,scope=ci-test-fe
+        cache-to: type=gha,mode=max,scope=ci-test-fe
         context: frontend
         load: true
 

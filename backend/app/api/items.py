@@ -1,6 +1,6 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy import select
@@ -15,9 +15,11 @@ router = APIRouter(prefix="/items")
 
 
 @router.get("", response_model=Page[ItemSchema])
-async def get_paginated_items(session: CurrentAsyncSession, user: CurrentUser) -> Any:
+async def get_paginated_items(response: Response, session: CurrentAsyncSession, user: CurrentUser) -> Any:
     query = select(Item).filter(Item.user_id == user.id)
-    return await paginate(session, query)
+    page = await paginate(session, query)
+    response.headers["Content-Range"] = "items 0-9/100"
+    return page
 
 
 @router.post("", response_model=ItemSchema, status_code=201)

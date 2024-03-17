@@ -5,11 +5,17 @@ on: [workflow_dispatch, push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.generate_tag.outputs.tag }}
     env:
        DOCKER_BUILDKIT: 1
        COMPOSE_DOCKER_CLI_BUILD: 1
 
     steps:
+    - name: Generate tag
+      id: generate_tag
+      run: echo "::set-output name=tag::$(echo $RANDOM)"
+
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -20,15 +26,15 @@ jobs:
       id: docker_build_backend
       uses: docker/build-push-action@v5
       with:
-        push: false
-        tags: "scorecard2-backend:latest"
+        push: true
+        tags: "cspanndev/scorecard2-backend:${{ steps.generate_tag.outputs.tag }}"
         cache-from: type=gha
         cache-to: type=gha,mode=max
         context: backend
         load: true
 
     - name: Image size
-      run: docker images scorecard2-backend:latest --format "{{.Size}}"
+      run: docker images scorecard2-backend:${{ steps.generate_tag.outputs.tag }} --format "{{.Size}}"
 
   test:
     needs: [build]
@@ -36,12 +42,23 @@ jobs:
     env:
         DOCKER_BUILDKIT: 1
         COMPOSE_DOCKER_CLI_BUILD: 1
+        TAG: ${{ needs.build.outputs.tag }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
     - name: Start containers
       run: |
+        docker pull cspanndev/scorecard2-backend:$TAG
         mv env-template .env
         docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
         docker-compose exec -T postgres createdb -U postgres apptest
@@ -60,3 +77,24 @@ jobs:
       run: |
         docker-compose ps
         docker-compose logs -t
+
+  push:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      TAG: ${{ needs.build.outputs.tag }}
+
+    steps:
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push image
+      run: |
+        docker pull cspanndev/scorecard2-backend:${{ needs.build.outputs.tag }}
+        docker tag cspanndev/scorecard2-backend:${{ needs.build.outputs.tag }} cspanndev/scorecard2-backend:latest
+        docker push cspanndev/scorecard2-backend:latest

@@ -15,9 +15,9 @@ class TestGetUsers:
 
         assert resp.status_code == 200, resp.text
         assert len(resp.json()) >= 1
-        assert resp.json()[0]["id"]
-        assert resp.json()[0]["email"]
-        assert resp.json()[0]["is_active"]
+        assert resp.json()["items"][0]["id"]
+        assert resp.json()["items"][0]["email"]
+        assert resp.json()["items"][0]["is_active"]
 
     async def test_unauthorized(self, client: AsyncClient):
         resp = await client.get(settings.API_PATH + "/users")

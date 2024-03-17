@@ -1,13 +1,12 @@
 from typing import Any
 
-from fastapi import Depends, params
+from fastapi import Depends
 from fastapi.routing import APIRouter
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio.session import AsyncSession
 
-from app.deps.db import CurrentAsyncSession, get_async_session
+from app.deps.db import CurrentAsyncSession
 from app.deps.users import CurrentSuperuser
 from app.models.user import User
 from app.schemas.user import UserRead

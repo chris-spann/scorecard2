@@ -1,11 +1,11 @@
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
-from sqlalchemy import func, select
-from starlette.responses import Response
+from fastapi_pagination import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
+from sqlalchemy import select
 
 from app.deps.db import CurrentAsyncSession
-from app.deps.request_params import ItemRequestParams
 from app.deps.users import CurrentUser
 from app.models.item import Item
 from app.schemas.item import Item as ItemSchema
@@ -14,29 +14,10 @@ from app.schemas.item import ItemCreate, ItemUpdate
 router = APIRouter(prefix="/items")
 
 
-@router.get("", response_model=list[ItemSchema])
-async def get_items(
-    response: Response,
-    session: CurrentAsyncSession,
-    request_params: ItemRequestParams,
-    user: CurrentUser,
-) -> Any:
-    total = await session.scalar(select(func.count(Item.id).filter(Item.user_id == user.id)))
-    items = (
-        (
-            await session.execute(
-                select(Item)
-                .offset(request_params.skip)
-                .limit(request_params.limit)
-                .order_by(request_params.order_by)
-                .filter(Item.user_id == user.id)
-            )
-        )
-        .scalars()
-        .all()
-    )
-    response.headers["Content-Range"] = f"{request_params.skip}-{request_params.skip + len(items)}/{total}"
-    return items
+@router.get("", response_model=Page[ItemSchema])
+async def get_paginated_items(session: CurrentAsyncSession, user: CurrentUser) -> Any:
+    query = select(Item).filter(Item.user_id == user.id)
+    return await paginate(session, query)
 
 
 @router.post("", response_model=ItemSchema, status_code=201)

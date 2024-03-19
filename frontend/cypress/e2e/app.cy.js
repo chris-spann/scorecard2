@@ -46,7 +46,7 @@ describe("Test register, login and item", () => {
         // eslint-disable-next-line no-unused-expressions
         expect(localStorage.getItem("token")).to.be.not.null;
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
     cy.contains("Welcome to admin");
     cy.saveLocalStorage();

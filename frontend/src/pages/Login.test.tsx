@@ -6,7 +6,7 @@ test("renders login", () => {
   render(
     <AdminContext>
       <LoginPage />
-    </AdminContext>
+    </AdminContext>,
   );
   const loginElements = screen.getAllByText(/Sign in/);
   expect(loginElements).toHaveLength(2);

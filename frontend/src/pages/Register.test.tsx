@@ -6,7 +6,7 @@ test("renders register", () => {
   render(
     <AdminContext>
       <Register />
-    </AdminContext>
+    </AdminContext>,
   );
   const registerElements = screen.getAllByText(/Register/i);
   expect(registerElements).toHaveLength(2);

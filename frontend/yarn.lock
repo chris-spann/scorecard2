@@ -2454,10 +2454,10 @@
     consola "^2.15.0"
     node-fetch "^2.6.1"
 
-"@openapitools/openapi-generator-cli@^2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.11.0.tgz#13af6f67a89bd685aa12032c56ecd8bdfe47a5e2"
-  integrity sha512-oqTNvFARvhztEgMHoOvdwx148MM89/Ersa8KZTZxMVtLXCynIDyTqWnZqvCsBUZDc2Bl+N8pT6XWbLkz3JVh0w==
+"@openapitools/openapi-generator-cli@^2.12.1":
+  version "2.12.1"
+  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-2.12.1.tgz#7d55d6e54252565a381f0447ba28dd899b10df3d"
+  integrity sha512-2AWBO5kNVfW7+kKVff7cHjpK7YpabKwyXbPJ+jhVGg4oGNv5lWK//wFYr4bRDu9Tx07E9jpWj/NxtPoss5kb0A==
   dependencies:
     "@nestjs/axios" "3.0.1"
     "@nestjs/common" "10.3.0"
@@ -2473,7 +2473,7 @@
     glob "7.2.3"
     inquirer "8.2.6"
     lodash "4.17.21"
-    reflect-metadata "0.1.13"
+    reflect-metadata "0.2.1"
     rxjs "7.8.1"
     tslib "2.6.2"
 
@@ -9659,10 +9659,10 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-reflect-metadata@0.1.13:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
-  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+reflect-metadata@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.2.1.tgz#8d5513c0f5ef2b4b9c3865287f3c0940c1f67f74"
+  integrity sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==
 
 regenerate-unicode-properties@^10.0.1:
   version "10.0.1"

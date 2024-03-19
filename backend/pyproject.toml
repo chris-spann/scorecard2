@@ -16,6 +16,7 @@ asyncpg = "^0.29.0"
 SQLAlchemy = "^2.0.28"
 gunicorn = "^21.2.0"
 fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
+platformdirs = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"

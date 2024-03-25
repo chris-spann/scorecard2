@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from fastapi.staticfiles import StaticFiles
+from fastapi_pagination import add_pagination
 from fastapi_users import FastAPIUsers
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
@@ -24,6 +25,7 @@ def create_app():
     setup_routers(app, fastapi_users)
     setup_cors_middleware(app)
     serve_static_app(app)
+    add_pagination(app)
     return app
 
 

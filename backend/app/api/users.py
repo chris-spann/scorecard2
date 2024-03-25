@@ -1,26 +1,21 @@
 from typing import Any
 
+from fastapi import Depends, Response
 from fastapi.routing import APIRouter
-from sqlalchemy import func, select
-from starlette.responses import Response
+from fastapi_pagination import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
+from sqlalchemy import select
 
 from app.deps.db import CurrentAsyncSession
 from app.deps.users import CurrentSuperuser
 from app.models.user import User
 from app.schemas.user import UserRead
 
-router = APIRouter()
+router = APIRouter(prefix="/users")
 
 
-@router.get("/users", response_model=list[UserRead])
-async def get_users(
-    response: Response,
-    session: CurrentAsyncSession,
-    user: CurrentSuperuser,
-    skip: int = 0,
-    limit: int = 100,
-) -> Any:
-    total = await session.scalar(select(func.count(User.id)))
-    users = (await session.execute(select(User).offset(skip).limit(limit))).scalars().all()
-    response.headers["Content-Range"] = f"{skip}-{skip + len(users)}/{total}"
-    return users
+@router.get("", response_model=Page[UserRead])
+async def get_paginated_users(user: CurrentSuperuser, session: CurrentAsyncSession, response: Response) -> Any:
+    query = select(User).order_by(User.created)
+    response.headers["Content-Range"] = "users 0-9/100"
+    return await paginate(session, query)

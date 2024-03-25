@@ -17,8 +17,8 @@ class TestGetItems:
         jwt_header = get_jwt_header(user)
         response = await client.get(settings.API_PATH + "/items?skip=1&limit=1", headers=jwt_header)
         assert response.status_code == 200
-        assert len(response.json()) == 1
-        assert response.json()[0]["value"] == item.value
+        assert len(response.json()["items"]) == 1
+        assert response.json()["items"][0]["value"] == item.value
 
 
 class TestGetSingleItem:

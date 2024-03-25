@@ -23,7 +23,15 @@ const httpClient = (url: string, options: any = {}) => {
     // We use PATCH for update on the backend for users, since PATCH is selective PUT, this change should be fine
     options.method = "PATCH";
   }
-  return fetchUtils.fetchJson(url, options);
+  return fetchUtils.fetchJson(url, options).then((response) => {
+    if (response.json && response.json.items) {
+      return {
+        ...response,
+        json: response.json.items,
+      };
+    }
+    return response;
+  });
 };
 
 const dataProvider = simpleRestProvider(`${basePath}/api/v1`, httpClient);

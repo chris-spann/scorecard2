@@ -32,7 +32,7 @@ export const ProfileProvider = ({ children }: { children: any }) => {
         setProfileVersion((currentVersion) => currentVersion + 1);
       },
     }),
-    [profileVersion]
+    [profileVersion],
   );
 
   return (
@@ -76,11 +76,11 @@ export const ProfileEdit = ({ ...props }) => {
           setSaving(false);
           notify(
             e.response?.data?.detail || "Unknown error, please try again later",
-            { type: "error" }
+            { type: "error" },
           );
         });
     },
-    [notify, refreshProfile, redirect]
+    [notify, refreshProfile, redirect],
   );
 
   if (isUserIdentityLoading) {

@@ -9308,7 +9308,7 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-ra-core@^4.16.12, ra-core@^4.16.15:
+ra-core@^4.16.15:
   version "4.16.15"
   resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-4.16.15.tgz#110e7b6b701d09e0e4589ca6f5e742412fd6ee5f"
   integrity sha512-S4bTYXHWCbYqjHVoTw2hmYo0Ny82sLmfMXxMLcFjVDjJ7mspt7Z/96y1t96i32jeYuoRhvXeHsIE3ABndkMWVw==
@@ -9332,10 +9332,10 @@ ra-data-json-server@^4.16.15:
     query-string "^7.1.1"
     ra-core "^4.16.15"
 
-ra-data-simple-rest@^4.16.12:
-  version "4.16.12"
-  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-4.16.12.tgz#e7aa11dc7ab0221218f2a32192b9f0c80e06af0b"
-  integrity sha512-2dMR7d+UCdHhsJGphvjStdzLPaMBMKxx6/hcyNhwuUs1notrhcj5WhaXJ8n4214RByzSuGSYIyD0uQqChb0eAA==
+ra-data-simple-rest@^4.16.15:
+  version "4.16.15"
+  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-4.16.15.tgz#eddc9b8777e060899b127c5ac4f71158a614bdb2"
+  integrity sha512-JoQFMVu46+sZ6mWchLJk1RsN0ZAyFQvM/srZrtm3ToDNvAhJfKCsc9BbBe02dRljlZF+cZfpIb/1KRbYLrG7ZQ==
   dependencies:
     query-string "^7.1.1"
 

@@ -53,7 +53,7 @@
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.13.1",
     "@types/react-router": "^5.1.20",
-    "cypress": "^13.7.3",
+    "cypress": "^13.8.1",
     "cypress-localstorage-commands": "^2.2.5",
     "cypress-pipe": "^2.0.0",
     "eslint-plugin-cypress": "^2.15.1",

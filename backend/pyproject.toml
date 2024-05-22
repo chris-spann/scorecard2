@@ -17,6 +17,7 @@ SQLAlchemy = "^2.0.29"
 gunicorn = "^21.2.0"
 fastapi-users = {extras = ["sqlalchemy"], version = "^13.0.0"}
 platformdirs = "^4.2.0"
+fastapi-pagination = "^0.12.19"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"

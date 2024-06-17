@@ -30,7 +30,7 @@ jobs:
 
     - name: Build frontend
       id: docker_build_frontend
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         push: true
         tags: "cspanndev/scorecard2-frontend:${{ steps.generate_tag.outputs.tag }}"

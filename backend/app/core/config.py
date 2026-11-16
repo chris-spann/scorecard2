@@ -18,12 +18,12 @@ class Settings(BaseSettings):
 
     # The following variables need to be defined in environment
 
-    TEST_DATABASE_URL: Optional[PostgresDsn]
+    TEST_DATABASE_URL: PostgresDsn | None
     DATABASE_URL: PostgresDsn
-    ASYNC_DATABASE_URL: Optional[PostgresDsn]
+    ASYNC_DATABASE_URL: PostgresDsn | None
 
     @validator("DATABASE_URL", pre=True)
-    def build_test_database_url(cls, v: Optional[str], values: dict[str, Any]):
+    def build_test_database_url(cls, v: str | None, values: dict[str, Any]):
         """Overrides DATABASE_URL with TEST_DATABASE_URL in test environment."""
         url = v
         if "pytest" in sys.modules:
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
         return url  # pragma: no cover
 
     @validator("ASYNC_DATABASE_URL")
-    def build_async_database_url(cls, v: Optional[str], values: dict[str, Any]):
+    def build_async_database_url(cls, v: str | None, values: dict[str, Any]):
         """Builds ASYNC_DATABASE_URL from DATABASE_URL."""
         if "DATABASE_URL" in values:
             v = values["DATABASE_URL"]
